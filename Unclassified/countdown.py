@@ -1,0 +1,47 @@
+import sys, time, sevseg
+# (!) Change this number to any number of seconds.
+secondsLeft = 30
+
+
+try:
+    while True: # Main program loop.
+        # Clear the screen by printing several newlines:
+        print('\n' * 50)
+
+        # Get the hours/minutes/seconds from secondsLeft:
+        # For example: 7265 is 2 hours, 1 minute, 5 second.
+        # So 7256 // 3600 is 2 hours:
+        hours = str(secondsLeft // 3600)
+        # And 7265 % 3600 is 65, and 65 // 60 is 1 minute:
+        minutes = str((secondsLeft % 3600) // 60)
+        # And 7256 % 60 is 5 sdconds:
+        seconds = str(secondsLeft % 60)
+
+
+        # Get the digit strings from sevseg module:
+        hDigits = sevseg.getSevSegStr(hours, 2)
+        hTopRow, hMiddleRow, hBottom = hDigits.splitlines()
+
+        mDigits = sevseg.getSevSegStr(minutes, 2)
+        mTopRow, mMiddleRow, mBottomRow = hDigits.splitlines()
+        sDigits = sevseg.getSevSegStr(seconds, 2)
+        sTopRow, sMiddleRow, sBottomRow = sDigits.splitlines()
+
+        # Display the digits:
+        print(hTopRow + '   '+ mTopRow + '  '+sTopRow)
+        print(hMiddleRow + ' * ' + mMiddleRow + ' *' + sMiddleRow)
+        print(hBottom + ' * ' + mBottomRow + ' *' + sBottomRow)
+
+        if secondsLeft == 0:
+            print()
+            print('****BOOM****')
+            break
+
+        print()
+        print('Press Ctrl-C to quit.')
+
+        time.sleep(1) # Insert a one-second pause.
+        secondsLeft -= 1
+except KeyboardInterrupt:
+    print('Countdown')
+    sys.exit()
